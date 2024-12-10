@@ -1,73 +1,83 @@
-/* style.css */
-
 body {
     font-family: Arial, sans-serif;
-    background: #f0f8ff;
+    background-color: #f4f4f4;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
 }
 
 .game-container {
     text-align: center;
+    max-width: 600px;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.5em 0;
+}
+
+.score-container {
+    margin-bottom: 1em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 2px;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    background: #ddd;
+}
+
+.cell {
+    width: 100%;
+    aspect-ratio: 1 / 1;
     background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    transition: background 0.3s;
 }
 
-#game-board {
-    display: grid; /* Enables grid layout */
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* Defines 5 equal columns */
-    grid-gap: 10px; /* Space between blocks, works with older browsers */
-    margin: 20px auto; /* Centers the grid horizontally */
-    max-width: 400px; /* Restricts the grid width */
-    padding: 10px; /* Adds padding around the grid */
-    background: #eef2f3; /* Optional: light background */
-    border: 2px solid #ccc; /* Optional: border */
-    border-radius: 8px; /* Optional: rounded corners */
-}
-
-
-.block {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(45deg, #ff6f61, #ffa372);
-    border-radius: 5px;
+.blocks-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    gap: 1em;
+    margin-top: 1em;
 }
 
-.block:hover {
-    transform: scale(1.1);
+.block {
+    display: grid;
+    gap: 2px;
+    cursor: grab;
 }
 
-.block.blasted {
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.5);
+.block-cell {
+    width: 20px;
+    height: 20px;
+    background: #6a5acd;
+    border: 1px solid #444;
 }
 
-.score {
-    font-size: 18px;
-    margin: 10px 0;
+.block.dragging {
+    cursor: grabbing;
 }
 
-button {
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
+#restart-btn {
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    font-size: 1em;
     border: none;
-    border-radius: 5px;
+    background: #6a5acd;
+    color: white;
     cursor: pointer;
-    font-size: 16px;
+    border-radius: 5px;
 }
 
-button:hover {
-    background: #0056b3;
+#restart-btn:hover {
+    background: #836fff;
 }
