@@ -3,172 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag and Drop Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-
-        #game-board {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: 5px;
-            width: 300px;
-            height: 300px;
-            background: #fff;
-            border: 2px solid #ccc;
-            padding: 5px;
-        }
-
-        .cell {
-            width: 100%;
-            height: 100%;
-            background: #e0e0e0;
-            border: 1px solid #bbb;
-        }
-
-        .block {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            margin: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        .block.dragging {
-            opacity: 0.5;
-            transform: scale(1.2);
-        }
-
-        .size-2x1 {
-            width: 125px; /* 2 spaces horizontally */
-            height: 60px;
-            background: linear-gradient(45deg, #6a5acd, #836fff);
-        }
-
-        .size-1x2 {
-            width: 60px;
-            height: 125px; /* 2 spaces vertically */
-            background: linear-gradient(45deg, #ff6347, #ff8260);
-        }
-
-        .size-3x1 {
-            width: 190px; /* 3 spaces horizontally */
-            height: 60px;
-            background: linear-gradient(45deg, #3cb371, #66cdaa);
-        }
-    </style>
+    <title>Block Blast Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<h1>Drag and Drop Game</h1>
-
-<div id="blocks"></div>
-
-<div id="game-board">
-    <!-- Generate 25 cells for a 5x5 grid -->
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-</div>
-
-<script>
-    const blocksContainer = document.getElementById('blocks');
-    const cells = document.querySelectorAll('.cell');
-
-    let currentBlocks = [];
-
-    // Generate blocks
-    function generateBlocks() {
-        blocksContainer.innerHTML = ''; // Clear previous blocks
-        currentBlocks = []; // Reset tracking array
-
-        // Create 3 new blocks with random sizes
-        for (let i = 0; i < 3; i++) {
-            const block = document.createElement('div');
-            const sizeClass = getRandomSizeClass(); // Random size class
-            block.classList.add('block', sizeClass);
-            block.draggable = true;
-            block.textContent = sizeClass.split('-')[1]; // Show size (e.g., "2x1")
-            blocksContainer.appendChild(block);
-            currentBlocks.push(block);
-
-            // Add drag events
-            block.addEventListener('dragstart', () => {
-                block.classList.add('dragging');
-            });
-            block.addEventListener('dragend', () => {
-                block.classList.remove('dragging');
-                checkAllBlocksPlaced();
-            });
-        }
-    }
-
-    // Get random block size
-    function getRandomSizeClass() {
-        const sizes = ['size-2x1', 'size-1x2', 'size-3x1'];
-        return sizes[Math.floor(Math.random() * sizes.length)];
-    }
-
-    // Check if all blocks have been placed
-    function checkAllBlocksPlaced() {
-        const placed = currentBlocks.every(block => !blocksContainer.contains(block));
-        if (placed) {
-            generateBlocks(); // Generate 3 more blocks
-        }
-    }
-
-    // Allow cells to accept blocks
-    cells.forEach(cell => {
-        cell.addEventListener('dragover', (e) => {
-            e.preventDefault(); // Allow dropping
-        });
-
-        cell.addEventListener('drop', (e) => {
-            const draggedBlock = document.querySelector('.dragging');
-            if (!cell.hasChildNodes()) { // Prevent multiple blocks in one cell
-                cell.appendChild(draggedBlock);
-            }
-        });
-    });
-
-    // Initialize game
-    generateBlocks();
-</script>
-
+    <div class="game-container">
+        <h1>Block Blast</h1>
+        <div class="score-container">
+            <span>Score: <span id="score">0</span></span>
+        </div>
+        <div class="grid" id="game-grid"></div>
+        <div class="blocks-container" id="blocks-container"></div>
+        <button id="restart-btn">Restart Game</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
