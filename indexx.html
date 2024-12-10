@@ -3,18 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Block Blast</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Drag and Drop Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 5px;
+            width: 300px;
+            height: 300px;
+            background: #fff;
+            border: 2px solid #ccc;
+            padding: 5px;
+        }
+
+        .cell {
+            width: 100%;
+            height: 100%;
+            background: #e0e0e0;
+            border: 1px solid #bbb;
+        }
+
+        .block {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6f61, #ffa372);
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        #blocks {
+            display: flex;
+            gap: 10px;
+        }
+
+        .block.dragging {
+            opacity: 0.5;
+            transform: scale(1.2);
+        }
+    </style>
 </head>
 <body>
-    <div class="game-container">
-        <h1>Block Blast</h1>
-        <div id="game-board"></div>
-        <div class="score">
-            Score: <span id="score">0</span>
-        </div>
-        <button id="reset">Reset Game</button>
-    </div>
-    <script src="script.js"></script>
+
+<h1>Drag and Drop Game</h1>
+
+<div id="blocks">
+    <div class="block" draggable="true" id="block1">A</div>
+    <div class="block" draggable="true" id="block2">B</div>
+    <div class="block" draggable="true" id="block3">C</div>
+</div>
+
+<div id="game-board">
+    <!-- Generate 25 cells for a 5x5 grid -->
+    <div class="cell" id="cell1"></div>
+    <div class="cell" id="cell2"></div>
+    <div class="cell" id="cell3"></div>
+    <div class="cell" id="cell4"></div>
+    <div class="cell" id="cell5"></div>
+    <div class="cell" id="cell6"></div>
+    <div class="cell" id="cell7"></div>
+    <div class="cell" id="cell8"></div>
+    <div class="cell" id="cell9"></div>
+    <div class="cell" id="cell10"></div>
+    <div class="cell" id="cell11"></div>
+    <div class="cell" id="cell12"></div>
+    <div class="cell" id="cell13"></div>
+    <div class="cell" id="cell14"></div>
+    <div class="cell" id="cell15"></div>
+    <div class="cell" id="cell16"></div>
+    <div class="cell" id="cell17"></div>
+    <div class="cell" id="cell18"></div>
+    <div class="cell" id="cell19"></div>
+    <div class="cell" id="cell20"></div>
+    <div class="cell" id="cell21"></div>
+    <div class="cell" id="cell22"></div>
+    <div class="cell" id="cell23"></div>
+    <div class="cell" id="cell24"></div>
+    <div class="cell" id="cell25"></div>
+</div>
+
+<script>
+    const blocks = document.querySelectorAll('.block');
+    const cells = document.querySelectorAll('.cell');
+
+    blocks.forEach(block => {
+        block.addEventListener('dragstart', () => {
+            block.classList.add('dragging');
+        });
+
+        block.addEventListener('dragend', () => {
+            block.classList.remove('dragging');
+        });
+    });
+
+    cells.forEach(cell => {
+        cell.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Allow dropping
+        });
+
+        cell.addEventListener('drop', (e) => {
+            const draggedBlock = document.querySelector('.dragging');
+            if (!cell.hasChildNodes()) { // Prevent multiple blocks in one cell
+                cell.appendChild(draggedBlock);
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
